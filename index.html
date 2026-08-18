@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Movimento Invenzionista Italiano — Statuto e Metodo</title>
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;1,9..144,450&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16213A;
+    --ink-soft:#2B3A5A;
+    --paper:#EFE9DA;
+    --paper-light:#F8F4E9;
+    --brass:#A06B2A;
+    --brass-deep:#7C4F1E;
+    --graphite:#5B5A50;
+    --alert:#8C3B29;
+    --line: rgba(22,33,58,0.18);
+    --line-strong: rgba(22,33,58,0.34);
+    --shadow: 0 1px 0 rgba(22,33,58,0.06);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:
+      repeating-linear-gradient(0deg, rgba(22,33,58,0.025) 0px, rgba(22,33,58,0.025) 1px, transparent 1px, transparent 32px),
+      repeating-linear-gradient(90deg, rgba(22,33,58,0.018) 0px, rgba(22,33,58,0.018) 1px, transparent 1px, transparent 32px),
+      var(--paper);
+    color:var(--ink);
+    font-family:"Source Serif 4", serif;
+    font-size:17px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:inherit;}
+
+  .eyebrow{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:11.5px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--brass-deep);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px; height:1px;
+    background:var(--brass-deep);
+    display:inline-block;
+  }
+
+  h1,h2,h3{
+    font-family:"Fraunces", serif;
+    font-weight:450;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+  }
+
+  .container{
+    max-width:1040px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- TOP BAR ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    background:rgba(239,233,218,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-inner{
+    max-width:1040px; margin:0 auto; padding:16px 32px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .mark{
+    display:flex; align-items:center; gap:10px;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:13px; letter-spacing:0.06em;
+    font-weight:600;
+  }
+  .mark .seal-mini{width:28px;height:28px;flex-shrink:0;}
+  .navlinks{display:flex; gap:28px; font-family:"IBM Plex Mono", monospace; font-size:12px; letter-spacing:0.04em;}
+  .navlinks a{text-decoration:none; color:var(--ink-soft); border-bottom:1px solid transparent; padding-bottom:2px; transition:border-color .2s;}
+  .navlinks a:hover{border-color:var(--brass);}
+  @media (max-width:760px){ .navlinks{display:none;} }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:96px 0 72px;
+    border-bottom:1px solid var(--line-strong);
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:48px;
+    align-items:start;
+  }
+  @media (max-width:760px){ .hero-grid{grid-template-columns:1fr;} }
+
+  .doc-number{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:11.5px;
+    color:var(--graphite);
+    letter-spacing:0.08em;
+    margin-bottom:28px;
+  }
+
+  .hero h1{
+    font-size:clamp(40px, 6vw, 64px);
+    line-height:1.04;
+    max-width:11ch;
+    margin:18px 0 22px;
+  }
+  .hero h1 em{font-style:italic; color:var(--brass-deep);}
+
+  .hero .sub{
+    font-size:18px;
+    color:var(--ink-soft);
+    max-width:46ch;
+    margin-bottom:30px;
+  }
+
+  .hero .definition{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12.5px;
+    line-height:1.8;
+    color:var(--graphite);
+    max-width:52ch;
+    border-left:2px solid var(--brass);
+    padding-left:16px;
+  }
+  .hero .definition b{color:var(--ink); font-weight:600;}
+
+  .seal{
+    width:172px; height:172px;
+    flex-shrink:0;
+    margin-top:6px;
+  }
+  @media (max-width:760px){ .seal{width:120px;height:120px; margin-top:0;} }
+  .seal-frame{
+    width:100%; height:100%;
+    border-radius:50%;
+    border:1px solid var(--ink);
+    display:flex; align-items:center; justify-content:center;
+    padding:9px;
+  }
+  .seal-frame-inner{
+    width:100%; height:100%;
+    border-radius:50%;
+    border:1px dashed var(--brass);
+    display:flex; align-items:center; justify-content:center;
+    padding:7px;
+  }
+  .seal-logo{
+    width:100%; height:100%;
+    border-radius:50%;
+    object-fit:cover;
+    display:block;
+  }
+  .logo-mini{
+    width:28px; height:28px;
+    border-radius:50%;
+    border:1px solid var(--ink);
+    object-fit:cover;
+    display:block;
+    flex-shrink:0;
+  }
+
+  .cta-row{
+    margin-top:36px;
+    display:flex; gap:16px; flex-wrap:wrap;
+  }
+  .btn{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12.5px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    text-decoration:none;
+    padding:13px 22px;
+    border:1px solid var(--ink);
+    color:var(--ink);
+    display:inline-block;
+    transition:all .2s;
+  }
+  .btn-solid{background:var(--ink); color:var(--paper-light);}
+  .btn-solid:hover{background:var(--brass-deep); border-color:var(--brass-deep);}
+  .btn-outline:hover{background:var(--ink); color:var(--paper-light);}
+
+  /* ---------- SECTION SCAFFOLD ---------- */
+  section.doc-section{
+    padding:76px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .sec-head{
+    display:grid;
+    grid-template-columns:120px 1fr;
+    gap:32px;
+    margin-bottom:44px;
+  }
+  @media (max-width:640px){ .sec-head{grid-template-columns:1fr;} }
+  .sec-head .artno{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:13px;
+    color:var(--brass-deep);
+    letter-spacing:0.05em;
+    padding-top:6px;
+  }
+  .sec-head h2{
+    font-size:clamp(26px,3.4vw,36px);
+  }
+  .sec-body{
+    display:grid;
+    grid-template-columns:120px 1fr;
+    gap:32px;
+  }
+  @media (max-width:640px){ .sec-body{grid-template-columns:1fr;} }
+  .sec-body .spacer{}
+
+  /* ---------- FINALITA (grid of goals) ---------- */
+  .goals{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:1px;
+    background:var(--line-strong);
+    border:1px solid var(--line-strong);
+  }
+  @media (max-width:640px){ .goals{grid-template-columns:1fr;} }
+  .goal{
+    background:var(--paper-light);
+    padding:26px 26px 24px;
+  }
+  .goal .gi{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:11px;
+    color:var(--graphite);
+    margin-bottom:10px;
+    display:block;
+  }
+  .goal p{font-size:15.5px; color:var(--ink-soft);}
+  .goal-note{
+    grid-column:1/-1;
+    background:var(--paper-light);
+    padding:20px 26px;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12.5px;
+    color:var(--graphite);
+    font-style:normal;
+  }
+
+  /* ---------- CLAIMS (Art.3, patent-claim style) ---------- */
+  .claims{counter-reset: claim;}
+  .claim{
+    counter-increment: claim;
+    display:grid;
+    grid-template-columns:52px 1fr;
+    gap:20px;
+    padding:22px 0;
+    border-top:1px solid var(--line);
+  }
+  .claim:last-child{border-bottom:1px solid var(--line);}
+  .claim::before{
+    content: "3." counter(claim);
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12.5px;
+    color:var(--brass-deep);
+    padding-top:3px;
+  }
+  .claim h3{font-size:18px; font-weight:600; margin-bottom:6px;}
+  .claim p{color:var(--ink-soft); font-size:15.5px; max-width:64ch;}
+
+  /* ---------- METODO DIAGRAM ---------- */
+  .method-wrap{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:36px;
+  }
+  .fig-caption{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:11.5px;
+    color:var(--graphite);
+    text-align:center;
+    letter-spacing:0.04em;
+    margin-top:10px;
+  }
+  .method-steps{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:1px;
+    background:var(--line-strong);
+    border:1px solid var(--line-strong);
+  }
+  @media (max-width:900px){ .method-steps{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:520px){ .method-steps{grid-template-columns:1fr;} }
+  .mstep{
+    background:var(--paper-light);
+    padding:20px 18px 18px;
+  }
+  .mstep .mnum{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:11px;
+    color:var(--brass-deep);
+  }
+  .mstep p{font-size:14px; color:var(--ink-soft); margin-top:8px;}
+  .method-note{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12.5px;
+    color:var(--alert);
+    text-align:center;
+    padding-top:6px;
+  }
+
+  /* ---------- STRUTTURA (two levels) ---------- */
+  .levels{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1px;
+    background:var(--line-strong);
+    border:1px solid var(--line-strong);
+  }
+  @media (max-width:700px){ .levels{grid-template-columns:1fr;} }
+  .level{
+    background:var(--paper-light);
+    padding:32px 30px;
+  }
+  .level .lvl-tag{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--brass-deep);
+    display:block;
+    margin-bottom:12px;
+  }
+  .level h3{font-size:21px; margin-bottom:12px;}
+  .level ul{margin:14px 0 0 0; padding-left:0; list-style:none;}
+  .level li{
+    font-size:15px; color:var(--ink-soft);
+    padding:9px 0; border-top:1px solid var(--line);
+  }
+  .level li:first-child{border-top:none;}
+
+  /* ---------- ADESIONE / SELEZIONE steps ---------- */
+  .process{
+    display:flex;
+    flex-direction:column;
+  }
+  .pstep{
+    display:grid;
+    grid-template-columns:52px 1fr;
+    gap:20px;
+    padding:16px 0;
+    border-top:1px solid var(--line);
+  }
+  .pstep:last-child{border-bottom:1px solid var(--line);}
+  .pstep .pn{font-family:"IBM Plex Mono", monospace; font-size:12.5px; color:var(--brass-deep);}
+  .pstep p{color:var(--ink-soft); font-size:15.5px;}
+
+  /* ---------- LEADERSHIP ---------- */
+  .lead-band{
+    background:var(--ink);
+    color:var(--paper-light);
+    padding:56px 0;
+  }
+  .lead-band .container{display:grid; grid-template-columns:120px 1fr; gap:32px;}
+  @media (max-width:640px){ .lead-band .container{grid-template-columns:1fr;} }
+  .lead-band .artno{color:#B98A4E; font-family:"IBM Plex Mono", monospace; font-size:13px; padding-top:6px;}
+  .lead-band h2{color:var(--paper-light); font-size:clamp(26px,3.4vw,34px); margin-bottom:20px;}
+  .lead-band p{color:rgba(248,244,233,0.82); max-width:60ch; font-size:16px; margin-bottom:10px;}
+  .lead-band .tenet{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:13px;
+    color:#B98A4E;
+    margin-top:22px;
+    letter-spacing:0.03em;
+  }
+
+  /* ---------- COMUNICAZIONE / FINANZIAMENTO ---------- */
+  .duo{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:48px;
+  }
+  @media (max-width:700px){ .duo{grid-template-columns:1fr;} }
+  .duo .col .artno{
+    font-family:"IBM Plex Mono", monospace; font-size:12px; color:var(--brass-deep); margin-bottom:10px; display:block;
+  }
+  .duo h3{font-size:22px; margin-bottom:14px;}
+  .duo ul{list-style:none;}
+  .duo li{
+    font-size:15px; color:var(--ink-soft);
+    padding:9px 0 9px 20px; border-top:1px solid var(--line);
+    position:relative;
+  }
+  .duo li:first-of-type{border-top:none;}
+  .duo li::before{
+    content:"—"; position:absolute; left:0; color:var(--brass);
+  }
+
+  /* ---------- CLOSING / SCIOGLIMENTO ---------- */
+  .closing{
+    padding:80px 0 60px;
+    text-align:center;
+  }
+  .closing .motto{
+    font-family:"Fraunces", serif;
+    font-style:italic;
+    font-weight:450;
+    font-size:clamp(24px,3.4vw,32px);
+    max-width:16ch;
+    margin:0 auto 20px;
+  }
+  .closing p{color:var(--graphite); font-size:14.5px; max-width:52ch; margin:0 auto;}
+
+  /* ---------- JOIN CTA ---------- */
+  .join{
+    padding:72px 0;
+    border-top:1px solid var(--line-strong);
+  }
+  .join-grid{
+    display:grid; grid-template-columns:1.2fr 1fr; gap:48px; align-items:center;
+  }
+  @media (max-width:760px){ .join-grid{grid-template-columns:1fr;} }
+  .join h2{font-size:clamp(28px,3.6vw,40px); max-width:14ch; margin-bottom:16px;}
+  .join p{color:var(--ink-soft); max-width:48ch;}
+  .join-panel{
+    border:1px solid var(--line-strong);
+    background:var(--paper-light);
+    padding:28px;
+  }
+  .join-panel .req{
+    font-family:"IBM Plex Mono", monospace; font-size:11px; color:var(--brass-deep);
+    letter-spacing:0.06em; text-transform:uppercase; margin-bottom:14px;
+  }
+  .join-panel ol{margin-left:18px; color:var(--ink-soft); font-size:14.5px; line-height:1.9;}
+
+  /* ---------- FULL STATUTE (details) ---------- */
+  .statute-full{
+    padding:56px 0 96px;
+  }
+  details{
+    border:1px solid var(--line-strong);
+    background:var(--paper-light);
+  }
+  summary{
+    cursor:pointer;
+    list-style:none;
+    padding:22px 28px;
+    display:flex; align-items:center; justify-content:space-between;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12.5px; letter-spacing:0.05em; text-transform:uppercase;
+  }
+  summary::-webkit-details-marker{display:none;}
+  summary::after{content:"+"; font-size:18px; color:var(--brass-deep);}
+  details[open] summary::after{content:"–";}
+  .statute-text{
+    padding:0 28px 32px;
+    font-size:14.5px;
+    color:var(--ink-soft);
+    white-space:pre-wrap;
+    font-family:"Source Serif 4", serif;
+    line-height:1.85;
+    border-top:1px solid var(--line);
+    margin-top:2px;
+    padding-top:24px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    padding:36px 0 48px;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:11.5px;
+    color:var(--graphite);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  }
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1; transform:none; transition:none;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="mark">
+      <img src="logo.png" alt="Logo MII" class="logo-mini">
+      MOVIMENTO INVENZIONISTA
+    </div>
+    <div class="navlinks">
+      <a href="#finalita">Finalità</a>
+      <a href="#principi">Principi</a>
+      <a href="#metodo">Metodo</a>
+      <a href="#struttura">Struttura</a>
+      <a href="#adesione">Adesione</a>
+      <a href="#statuto">Statuto</a>
+    </div>
+  </div>
+</div>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="doc-number">DOCUMENTO COSTITUTIVO · REV. 2026 · ART. 1–2</div>
+        <div class="eyebrow">Movimento politico nazionale</div>
+        <h1>Governare è un <em>problema tecnico</em> prima che uno slogan.</h1>
+        <p class="sub">Il Movimento Invenzionista Italiano è apartitico nei metodi e non ideologico nei fini. Non promettiamo risultati assoluti: promettiamo processi migliorabili, verificabili, revocabili.</p>
+        <div class="definition"><b>Invenzionismo</b> (s.m.) — metodo politico secondo cui ogni posizione decisionale richiede la capacità di formulare almeno una proposta operativa, analizzabile e criticabile, atta a modificare lo stato del sistema affrontato.</div>
+        <div class="cta-row">
+          <a href="#adesione" class="btn btn-solid">Come aderire</a>
+          <a href="#statuto" class="btn btn-outline">Leggi lo statuto</a>
+        </div>
+      </div>
+      <div class="seal">
+        <div class="seal-frame">
+          <div class="seal-frame-inner">
+            <img src="logo.png" alt="Logo Movimento Invenzionista Italiano" class="seal-logo">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ================= FINALITA ================= -->
+<section class="doc-section reveal" id="finalita">
+  <div class="container">
+    <div class="sec-head">
+      <div class="artno">ART. 2</div>
+      <div>
+        <div class="eyebrow">Finalità</div>
+        <h2>Quattro obiettivi, nessuna promessa vuota.</h2>
+      </div>
+    </div>
+    <div class="sec-body">
+      <div class="spacer"></div>
+      <div class="goals">
+        <div class="goal">
+          <span class="gi">2.1</span>
+          <p>Promuovere l'accesso alle istituzioni di persone dotate di competenze tecniche comprovate.</p>
+        </div>
+        <div class="goal">
+          <span class="gi">2.2</span>
+          <p>Applicare il metodo scientifico e l'analisi dei dati alla formulazione delle politiche pubbliche.</p>
+        </div>
+        <div class="goal">
+          <span class="gi">2.3</span>
+          <p>Ridurre l'arbitrarietà decisionale attraverso processi trasparenti e verificabili.</p>
+        </div>
+        <div class="goal">
+          <span class="gi">2.4</span>
+          <p>Migliorare l'efficienza, la sostenibilità e la razionalità dell'amministrazione pubblica.</p>
+        </div>
+        <div class="goal-note">Il Movimento non promette risultati assoluti, ma processi migliorabili.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PRINCIPI ================= -->
+<section class="doc-section reveal" id="principi">
+  <div class="container">
+    <div class="sec-head">
+      <div class="artno">ART. 3</div>
+      <div>
+        <div class="eyebrow">Principi non negoziabili</div>
+        <h2>Cinque clausole fondative. Inderogabili anche in sede di revisione.</h2>
+      </div>
+    </div>
+    <div class="claims">
+      <div class="claim">
+        <div></div>
+        <div>
+          <h3>Competenza dimostrabile</h3>
+          <p>Ogni ruolo decisionale richiede qualifiche, esperienza o evidenze verificabili — non la sola appartenenza o fedeltà.</p>
+        </div>
+      </div>
+      <div class="claim">
+        <div></div>
+        <div>
+          <h3>Trasparenza operativa</h3>
+          <p>Dati, analisi e criteri decisionali devono essere accessibili a chiunque voglia verificarli.</p>
+        </div>
+      </div>
+      <div class="claim">
+        <div></div>
+        <div>
+          <h3>Responsabilità</h3>
+          <p>Ogni decisione è associata a indicatori di valutazione ex post: si misura ciò che si è deciso.</p>
+        </div>
+      </div>
+      <div class="claim">
+        <div></div>
+        <div>
+          <h3>Revisione continua</h3>
+          <p>Ogni politica è rivedibile alla luce di nuove evidenze. Nessuna posizione è definitiva per principio.</p>
+        </div>
+      </div>
+      <div class="claim">
+        <div></div>
+        <div>
+          <h3>Assenza di culto della personalità</h3>
+          <p>Il metodo precede le persone. Nessun individuo è più grande del processo che rappresenta.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= METODO ================= -->
+<section class="doc-section reveal" id="metodo">
+  <div class="container">
+    <div class="sec-head">
+      <div class="artno">ART. 4</div>
+      <div>
+        <div class="eyebrow">Metodo Invenzionista</div>
+        <h2>Un ciclo, non un dogma. Si chiude solo per ricominciare.</h2>
+      </div>
+    </div>
+
+    <div class="method-wrap">
+      <div>
+        <svg viewBox="0 0 500 460" style="width:100%; max-width:560px; display:block; margin:0 auto;" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="250" cy="230" r="160" fill="none" stroke="#16213A" stroke-width="1" stroke-dasharray="1 6" opacity="0.55"/>
+          <!-- arrows path (cycle) -->
+          <path d="M 250 70 A 160 160 0 1 1 97.8 180.6" fill="none" stroke="#A06B2A" stroke-width="1.3" marker-end="url(#arrow)"/>
+          <defs>
+            <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 z" fill="#A06B2A"/>
+            </marker>
+          </defs>
+
+          <!-- node 1 -->
+          <circle cx="250" cy="70" r="30" fill="#F8F4E9" stroke="#16213A" stroke-width="1.2"/>
+          <text x="250" y="66" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#A06B2A">FIG 4.1</text>
+          <text x="250" y="80" text-anchor="middle" font-family="Fraunces" font-size="13" fill="#16213A">Analisi</text>
+
+          <!-- node 2 -->
+          <circle cx="402" cy="181" r="30" fill="#F8F4E9" stroke="#16213A" stroke-width="1.2"/>
+          <text x="402" y="177" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#A06B2A">FIG 4.2</text>
+          <text x="402" y="191" text-anchor="middle" font-family="Fraunces" font-size="13" fill="#16213A">Confronto</text>
+
+          <!-- node 3 -->
+          <circle cx="344" cy="359" r="30" fill="#F8F4E9" stroke="#16213A" stroke-width="1.2"/>
+          <text x="344" y="355" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#A06B2A">FIG 4.3</text>
+          <text x="344" y="369" text-anchor="middle" font-family="Fraunces" font-size="13" fill="#16213A">Trade-off</text>
+
+          <!-- node 4 -->
+          <circle cx="156" cy="359" r="30" fill="#F8F4E9" stroke="#16213A" stroke-width="1.2"/>
+          <text x="156" y="355" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#A06B2A">FIG 4.4</text>
+          <text x="156" y="369" text-anchor="middle" font-family="Fraunces" font-size="13" fill="#16213A">Attuazione</text>
+
+          <!-- node 5 -->
+          <circle cx="98" cy="181" r="30" fill="#F8F4E9" stroke="#16213A" stroke-width="1.2"/>
+          <text x="98" y="177" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#A06B2A">FIG 4.5</text>
+          <text x="98" y="191" text-anchor="middle" font-family="Fraunces" font-size="13" fill="#16213A">Revisione</text>
+
+          <text x="250" y="235" text-anchor="middle" font-family="IBM Plex Mono" font-size="10.5" fill="#5B5A50" letter-spacing="0.5">CICLO</text>
+          <text x="250" y="250" text-anchor="middle" font-family="IBM Plex Mono" font-size="10.5" fill="#5B5A50" letter-spacing="0.5">CONTINUO</text>
+        </svg>
+        <div class="fig-caption">FIG. 1 — Il ciclo del Metodo Invenzionista, Art. 4</div>
+      </div>
+
+      <div class="method-steps">
+        <div class="mstep">
+          <span class="mnum">4.1</span>
+          <p>Analisi del problema tramite dati e modelli espliciti.</p>
+        </div>
+        <div class="mstep">
+          <span class="mnum">4.2</span>
+          <p>Valutazione comparativa delle alternative.</p>
+        </div>
+        <div class="mstep">
+          <span class="mnum">4.3</span>
+          <p>Esplicitazione dei trade-off e dei limiti.</p>
+        </div>
+        <div class="mstep">
+          <span class="mnum">4.4</span>
+          <p>Implementazione graduale e monitorata.</p>
+        </div>
+        <div class="mstep">
+          <span class="mnum">4.5</span>
+          <p>Valutazione degli effetti e revisione.</p>
+        </div>
+      </div>
+      <div class="method-note">Ogni proposta politica deve dichiarare cosa non risolve.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STRUTTURA ================= -->
+<section class="doc-section reveal" id="struttura">
+  <div class="container">
+    <div class="sec-head">
+      <div class="artno">ART. 5</div>
+      <div>
+        <div class="eyebrow">Struttura del Movimento</div>
+        <h2>Due livelli, distinti e interdipendenti.</h2>
+      </div>
+    </div>
+    <div class="levels">
+      <div class="level">
+        <span class="lvl-tag">Livello A</span>
+        <h3>Tecnico</h3>
+        <ul>
+          <li>Composto da esperti dei settori di riferimento: economia, diritto, tecnologia, sanità, ambiente, amministrazione.</li>
+          <li>Produce analisi, piani, modelli e valutazioni.</li>
+          <li>I contenuti tecnici non sono modificabili senza motivazione pubblica.</li>
+        </ul>
+      </div>
+      <div class="level">
+        <span class="lvl-tag">Livello B</span>
+        <h3>Politico</h3>
+        <ul>
+          <li>Funzione di rappresentanza, comunicazione e coordinamento istituzionale.</li>
+          <li>Non può alterare i contenuti tecnici senza motivazione pubblica.</li>
+          <li>Risponde ai risultati, non alla narrazione.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ADESIONE / SELEZIONE ================= -->
+<section class="doc-section reveal" id="adesione">
+  <div class="container">
+    <div class="sec-head">
+      <div class="artno">ART. 6–7</div>
+      <div>
+        <div class="eyebrow">Adesione e selezione delle cariche</div>
+        <h2>Aderire non è ottenere un ruolo. È accettare di essere valutati.</h2>
+      </div>
+    </div>
+    <div class="sec-body">
+      <div></div>
+      <div class="process">
+        <div class="pstep"><span class="pn">01</span><p>Accettazione integrale dello Statuto.</p></div>
+        <div class="pstep"><span class="pn">02</span><p>Impegno a rispettare il Metodo Invenzionista.</p></div>
+        <div class="pstep"><span class="pn">03</span><p>Accettazione della valutazione delle proprie competenze — l'adesione non implica automaticamente ruoli decisionali.</p></div>
+        <div class="pstep"><span class="pn">04</span><p>Le cariche interne e le candidature pubbliche seguono criteri oggettivi dichiarati.</p></div>
+        <div class="pstep"><span class="pn">05</span><p>Valutazione delle competenze, con eventuali prove o colloqui tecnici.</p></div>
+        <div class="pstep"><span class="pn">06</span><p>Revisione periodica delle prestazioni, anche dopo l'assegnazione della carica.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LEADERSHIP band ================= -->
+<div class="lead-band reveal">
+  <div class="container">
+    <div class="artno">ART. 8</div>
+    <div>
+      <h2>Nessun leader permanente.</h2>
+      <p>Ogni incarico è a tempo determinato, revocabile, subordinato ai risultati e alla conformità al metodo.</p>
+      <p>Il Movimento sopravvive ai suoi fondatori — per costruzione, non per augurio.</p>
+      <div class="tenet">→ NESSUNA CARICA È PER SEMPRE</div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= COMUNICAZIONE / FINANZIAMENTO ================= -->
+<section class="doc-section reveal">
+  <div class="container">
+    <div class="duo">
+      <div class="col">
+        <span class="artno">ART. 9</span>
+        <h3>Comunicazione pubblica</h3>
+        <ul>
+          <li>Evita slogan semplificatori ingannevoli.</li>
+          <li>Esplicita limiti, costi e incertezze.</li>
+          <li>Privilegia chiarezza e verificabilità.</li>
+          <li>Rifiuta la disinformazione come strumento politico.</li>
+        </ul>
+      </div>
+      <div class="col">
+        <span class="artno">ART. 10</span>
+        <h3>Finanziamento</h3>
+        <ul>
+          <li>Ogni forma di finanziamento è trasparente.</li>
+          <li>È tracciabile.</li>
+          <li>Non può influenzare le decisioni tecniche.</li>
+          <li>È vietato ogni finanziamento che comprometta l'indipendenza del Movimento.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MODIFICA / SCIOGLIMENTO ================= -->
+<section class="closing reveal">
+  <div class="container">
+    <div class="doc-number" style="text-align:center; margin-bottom:24px;">ART. 11–12</div>
+    <div class="motto">Meglio cessare che degenerare.</div>
+    <p>Lo Statuto si modifica solo con procedura pubblica, motivazione tecnica e consultazione interna — mai in violazione dei principi dell'Art. 3. Il Movimento si scioglie se viene meno il rispetto sistematico del Metodo o la responsabilità decisionale.</p>
+  </div>
+</section>
+
+<!-- ================= JOIN ================= -->
+<section class="join reveal">
+  <div class="container">
+    <div class="join-grid">
+      <div>
+        <div class="eyebrow">Partecipare</div>
+        <h2>Non cerchiamo consenso. Cerchiamo competenza.</h2>
+        <p>Se condividi il metodo più che l'identità, il Movimento Invenzionista non ti chiede fedeltà: ti chiede di dimostrare, discutere e lasciarti valutare.</p>
+      </div>
+      <div class="join-panel">
+        <div class="req">Requisiti d'adesione — Art. 6</div>
+        <ol>
+          <li>Accettazione integrale dello Statuto</li>
+          <li>Impegno al Metodo Invenzionista</li>
+          <li>Disponibilità alla valutazione delle proprie competenze</li>
+        </ol>
+        <div class="cta-row" style="margin-top:22px;">
+          <a href="#statuto" class="btn btn-solid">Leggi lo Statuto completo</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FULL STATUTE ================= -->
+<section class="statute-full container reveal" id="statuto">
+  <details>
+    <summary>Statuto del Movimento Invenzionista Italiano — testo integrale (Art. 1–12)</summary>
+    <div class="statute-text">Art. 1 Natura del Movimento
+Il Movimento Invenzionista Italiano è un movimento politico nazionale, apartitico nei metodi e non ideologico nei fini, fondato sul principio che il governo della cosa pubblica debba basarsi su competenza verificabile, metodo razionale e responsabilità misurabile.
+Il Movimento non rappresenta una corrente filosofica, morale o identitaria, ma un metodo di governo.
+
+Art. 2 Finalità
+Il Movimento persegue i seguenti obiettivi fondamentali:
+— Promuovere l'accesso alle istituzioni di persone dotate di competenze tecniche comprovate.
+— Applicare il metodo scientifico e l'analisi dei dati alla formulazione delle politiche pubbliche.
+— Ridurre l'arbitrarietà decisionale attraverso processi trasparenti e verificabili.
+— Migliorare l'efficienza, la sostenibilità e la razionalità dell'amministrazione pubblica.
+Il Movimento non promette risultati assoluti, ma processi migliorabili.
+
+Art. 3 Principi non negoziabili
+Sono principi fondativi e inderogabili del Movimento:
+— Competenza dimostrabile: ogni ruolo decisionale richiede qualifiche, esperienza o evidenze verificabili.
+— Trasparenza operativa: dati, analisi e criteri decisionali devono essere accessibili.
+— Responsabilità: ogni decisione è associata a indicatori di valutazione ex post.
+— Revisione continua: ogni politica è rivedibile alla luce di nuove evidenze.
+— Assenza di culto della personalità.
+
+Art. 4 Metodo Invenzionista
+Il Movimento adotta il cosiddetto Metodo Invenzionista, basato su:
+— Analisi del problema tramite dati e modelli espliciti.
+— Valutazione comparativa delle alternative.
+— Esplicitazione dei trade-off e dei limiti.
+— Implementazione graduale e monitorata.
+— Valutazione degli effetti e revisione.
+Ogni proposta politica deve dichiarare cosa non risolve.
+
+Art. 5 Struttura del Movimento
+Il Movimento è strutturato su due livelli funzionali:
+a) Livello Tecnico — composto da esperti nei settori di riferimento (economia, diritto, tecnologia, sanità, ambiente, amministrazione); produce analisi, piani, modelli e valutazioni.
+b) Livello Politico — ha funzione di rappresentanza, comunicazione e coordinamento istituzionale; non può modificare i contenuti tecnici senza motivazione pubblica.
+I due livelli sono distinti ma interdipendenti.
+
+Art. 6 Adesione
+Può aderire al Movimento chi:
+— accetta integralmente il presente Statuto;
+— si impegna a rispettare il Metodo Invenzionista;
+— accetta la valutazione delle proprie competenze.
+L'adesione non implica automaticamente ruoli decisionali.
+
+Art. 7 Selezione delle cariche
+Le cariche interne e le candidature pubbliche sono assegnate tramite:
+— criteri oggettivi dichiarati;
+— valutazione delle competenze;
+— eventuali prove o colloqui tecnici;
+— revisione periodica delle prestazioni.
+
+Art. 8 Leadership
+Il Movimento non riconosce leader permanenti.
+Ogni incarico:
+— è a tempo determinato;
+— è revocabile;
+— è subordinato ai risultati e alla conformità al metodo.
+Il Movimento sopravvive ai suoi fondatori.
+
+Art. 9 Comunicazione pubblica
+La comunicazione del Movimento:
+— evita slogan semplificatori ingannevoli;
+— esplicita limiti, costi e incertezze;
+— privilegia chiarezza e verificabilità.
+Il Movimento rifiuta la disinformazione come strumento politico.
+
+Art. 10 Finanziamento
+Ogni forma di finanziamento:
+— è trasparente;
+— è tracciabile;
+— non può influenzare le decisioni tecniche.
+È vietato qualsiasi finanziamento che comprometta l'indipendenza del Movimento.
+
+Art. 11 Modifica dello Statuto
+Il presente Statuto può essere modificato solo tramite:
+— procedura pubblica;
+— motivazione tecnica;
+— periodo di valutazione e consultazione interna.
+Le modifiche non possono violare i principi di cui all'Art. 3.
+
+Art. 12 Scioglimento
+Il Movimento si scioglie qualora venga meno:
+— il rispetto sistematico del Metodo Invenzionista;
+— la responsabilità decisionale.
+Meglio cessare che degenerare.
+
+NOTA: L'invenzionismo è un metodo politico secondo cui ogni posizione decisionale richiede la capacità di formulare almeno una proposta operativa, analizzabile e criticabile, atta a modificare lo stato del sistema affrontato.</div>
+  </details>
+</section>
+
+<footer class="container">
+  <span>© Movimento Invenzionista Italiano — documento redatto secondo lo Statuto, Art. 1–12</span>
+  <span>Metodo su ideologia. Sempre.</span>
+</footer>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  }, {threshold:0.12});
+  els.forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
