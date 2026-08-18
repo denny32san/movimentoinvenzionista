@@ -20,7 +20,12 @@
     --alert:#8C3B29;
     --line: rgba(22,33,58,0.18);
     --line-strong: rgba(22,33,58,0.34);
-    --shadow: 0 1px 0 rgba(22,33,58,0.06);
+    --shadow-sm: 0 1px 2px rgba(22,33,58,0.04), 0 1px 3px rgba(22,33,58,0.06);
+    --shadow-md: 0 4px 6px -1px rgba(22,33,58,0.06), 0 2px 4px -2px rgba(22,33,58,0.04);
+    --shadow-lg: 0 10px 15px -3px rgba(22,33,58,0.08), 0 4px 6px -4px rgba(22,33,58,0.04);
+    --radius-sm: 3px;
+    --radius-md: 6px;
+    --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   *{box-sizing:border-box; margin:0; padding:0;}
@@ -29,17 +34,25 @@
 
   body{
     background:
-      repeating-linear-gradient(0deg, rgba(22,33,58,0.025) 0px, rgba(22,33,58,0.025) 1px, transparent 1px, transparent 32px),
-      repeating-linear-gradient(90deg, rgba(22,33,58,0.018) 0px, rgba(22,33,58,0.018) 1px, transparent 1px, transparent 32px),
+      radial-gradient(ellipse at top, rgba(160,107,42,0.04) 0%, transparent 55%),
+      repeating-linear-gradient(0deg, rgba(22,33,58,0.02) 0px, rgba(22,33,58,0.02) 1px, transparent 1px, transparent 32px),
+      repeating-linear-gradient(90deg, rgba(22,33,58,0.014) 0px, rgba(22,33,58,0.014) 1px, transparent 1px, transparent 32px),
       var(--paper);
     color:var(--ink);
     font-family:"Source Serif 4", serif;
     font-size:17px;
-    line-height:1.65;
+    line-height:1.68;
     -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    text-rendering:optimizeLegibility;
   }
 
-  a{color:inherit;}
+  a{color:inherit; transition: color var(--transition);}
+  a:focus-visible{
+    outline: 2px solid var(--brass);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+  }
 
   .eyebrow{
     font-family:"IBM Plex Mono", monospace;
@@ -61,25 +74,27 @@
   h1,h2,h3{
     font-family:"Fraunces", serif;
     font-weight:450;
-    letter-spacing:-0.01em;
+    letter-spacing:-0.015em;
     color:var(--ink);
+    line-height:1.2;
   }
 
   .container{
-    max-width:1040px;
+    max-width:1080px;
     margin:0 auto;
     padding:0 32px;
   }
 
-  /* ---------- TOP BAR ---------- */
   .topbar{
     position:sticky; top:0; z-index:50;
-    background:rgba(239,233,218,0.92);
-    backdrop-filter:blur(6px);
+    background:rgba(239,233,218,0.85);
+    backdrop-filter:blur(12px) saturate(140%);
+    -webkit-backdrop-filter:blur(12px) saturate(140%);
     border-bottom:1px solid var(--line);
+    box-shadow: var(--shadow-sm);
   }
   .topbar-inner{
-    max-width:1040px; margin:0 auto; padding:16px 32px;
+    max-width:1080px; margin:0 auto; padding:16px 32px;
     display:flex; align-items:center; justify-content:space-between;
   }
   .mark{
@@ -87,27 +102,81 @@
     font-family:"IBM Plex Mono", monospace;
     font-size:13px; letter-spacing:0.06em;
     font-weight:600;
+    text-decoration:none;
+  }
+  .mark:focus-visible{
+    outline: 2px solid var(--brass);
+    outline-offset: 4px;
+    border-radius: var(--radius-sm);
   }
   .mark .seal-mini{width:28px;height:28px;flex-shrink:0;}
-  .navlinks{display:flex; gap:28px; font-family:"IBM Plex Mono", monospace; font-size:12px; letter-spacing:0.04em;}
-  .navlinks a{text-decoration:none; color:var(--ink-soft); border-bottom:1px solid transparent; padding-bottom:2px; transition:border-color .2s;}
-  .navlinks a:hover{border-color:var(--brass);}
-  @media (max-width:760px){ .navlinks{display:none;} }
+  .navlinks{display:flex; gap:28px; font-family:"IBM Plex Mono", monospace; font-size:12px; letter-spacing:0.04em; align-items:center;}
+  .navlinks a{text-decoration:none; color:var(--ink-soft); border-bottom:1px solid transparent; padding-bottom:2px; transition:border-color var(--transition), color var(--transition);}
+  .navlinks a:hover{border-color:var(--brass); color:var(--ink);}
+  .navlinks a:focus-visible{
+    outline: 2px solid var(--brass);
+    outline-offset: 4px;
+    border-radius: var(--radius-sm);
+  }
+  .nav-toggle{
+    display:none;
+    background:none;
+    border:1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    padding:8px 10px;
+    cursor:pointer;
+    color:var(--ink);
+    transition: all var(--transition);
+  }
+  .nav-toggle:hover{
+    border-color:var(--brass);
+    background:var(--paper-light);
+  }
+  .nav-toggle:focus-visible{
+    outline: 2px solid var(--brass);
+    outline-offset: 2px;
+  }
+  .nav-toggle span{
+    display:block;
+    width:20px;
+    height:1.5px;
+    background:var(--ink);
+    margin:4px 0;
+    transition: all var(--transition);
+  }
+  @media (max-width:760px){
+    .navlinks{display:none; position:absolute; top:100%; left:0; right:0; background:var(--paper-light); flex-direction:column; gap:0; border-bottom:1px solid var(--line); padding:12px 0; box-shadow: var(--shadow-md);}
+    .navlinks.open{display:flex;}
+    .navlinks a{padding:12px 32px; border-bottom:1px solid var(--line); width:100%;}
+    .navlinks a:last-child{border-bottom:none;}
+    .nav-toggle{display:block;}
+  }
 
-  /* ---------- HERO ---------- */
   .hero{
-    padding:96px 0 72px;
+    padding:104px 0 80px;
     border-bottom:1px solid var(--line-strong);
     position:relative;
     overflow:hidden;
   }
+  .hero::before{
+    content:"";
+    position:absolute;
+    top:-50%;
+    right:-20%;
+    width:600px;
+    height:600px;
+    background:radial-gradient(circle, rgba(160,107,42,0.06) 0%, transparent 70%);
+    pointer-events:none;
+  }
   .hero-grid{
     display:grid;
     grid-template-columns:1fr auto;
-    gap:48px;
+    gap:64px;
     align-items:start;
+    position:relative;
+    z-index:1;
   }
-  @media (max-width:760px){ .hero-grid{grid-template-columns:1fr;} }
+  @media (max-width:760px){ .hero-grid{grid-template-columns:1fr; gap:40px;} }
 
   .doc-number{
     font-family:"IBM Plex Mono", monospace;
@@ -118,43 +187,46 @@
   }
 
   .hero h1{
-    font-size:clamp(40px, 6vw, 64px);
-    line-height:1.04;
+    font-size:clamp(40px, 6vw, 68px);
+    line-height:1.03;
     max-width:11ch;
-    margin:18px 0 22px;
+    margin:18px 0 24px;
   }
-  .hero h1 em{font-style:italic; color:var(--brass-deep);}
+  .hero h1 em{font-style:italic; color:var(--brass-deep); font-weight:450;}
 
   .hero .sub{
-    font-size:18px;
+    font-size:18.5px;
     color:var(--ink-soft);
     max-width:46ch;
-    margin-bottom:30px;
+    margin-bottom:34px;
   }
 
   .hero .definition{
     font-family:"IBM Plex Mono", monospace;
     font-size:12.5px;
-    line-height:1.8;
+    line-height:1.85;
     color:var(--graphite);
     max-width:52ch;
     border-left:2px solid var(--brass);
-    padding-left:16px;
+    padding-left:18px;
+    padding-top:4px;
+    padding-bottom:4px;
   }
   .hero .definition b{color:var(--ink); font-weight:600;}
 
   .seal{
-    width:172px; height:172px;
+    width:180px; height:180px;
     flex-shrink:0;
     margin-top:6px;
   }
-  @media (max-width:760px){ .seal{width:120px;height:120px; margin-top:0;} }
+  @media (max-width:760px){ .seal{width:128px;height:128px; margin-top:0;} }
   .seal-frame{
     width:100%; height:100%;
     border-radius:50%;
     border:1px solid var(--ink);
     display:flex; align-items:center; justify-content:center;
     padding:9px;
+    box-shadow: var(--shadow-md);
   }
   .seal-frame-inner{
     width:100%; height:100%;
@@ -179,8 +251,8 @@
   }
 
   .cta-row{
-    margin-top:36px;
-    display:flex; gap:16px; flex-wrap:wrap;
+    margin-top:40px;
+    display:flex; gap:14px; flex-wrap:wrap;
   }
   .btn{
     font-family:"IBM Plex Mono", monospace;
@@ -188,28 +260,40 @@
     letter-spacing:0.05em;
     text-transform:uppercase;
     text-decoration:none;
-    padding:13px 22px;
+    padding:14px 24px;
     border:1px solid var(--ink);
     color:var(--ink);
-    display:inline-block;
-    transition:all .2s;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition:all var(--transition);
+    border-radius: var(--radius-sm);
+    background:transparent;
+    cursor:pointer;
+  }
+  .btn:hover{transform:translateY(-1px); box-shadow: var(--shadow-md);}
+  .btn:active{transform:translateY(0);}
+  .btn:focus-visible{
+    outline: 2px solid var(--brass);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
   }
   .btn-solid{background:var(--ink); color:var(--paper-light);}
-  .btn-solid:hover{background:var(--brass-deep); border-color:var(--brass-deep);}
+  .btn-solid:hover{background:var(--brass-deep); border-color:var(--brass-deep); color:var(--paper-light);}
   .btn-outline:hover{background:var(--ink); color:var(--paper-light);}
 
-  /* ---------- SECTION SCAFFOLD ---------- */
   section.doc-section{
-    padding:76px 0;
+    padding:88px 0;
     border-bottom:1px solid var(--line);
+    scroll-margin-top: 80px;
   }
   .sec-head{
     display:grid;
     grid-template-columns:120px 1fr;
     gap:32px;
-    margin-bottom:44px;
+    margin-bottom:48px;
   }
-  @media (max-width:640px){ .sec-head{grid-template-columns:1fr;} }
+  @media (max-width:640px){ .sec-head{grid-template-columns:1fr; margin-bottom:36px;} }
   .sec-head .artno{
     font-family:"IBM Plex Mono", monospace;
     font-size:13px;
@@ -218,7 +302,7 @@
     padding-top:6px;
   }
   .sec-head h2{
-    font-size:clamp(26px,3.4vw,36px);
+    font-size:clamp(26px,3.4vw,38px);
   }
   .sec-body{
     display:grid;
@@ -226,49 +310,56 @@
     gap:32px;
   }
   @media (max-width:640px){ .sec-body{grid-template-columns:1fr;} }
-  .sec-body .spacer{}
 
-  /* ---------- FINALITA (grid of goals) ---------- */
   .goals{
     display:grid;
     grid-template-columns:repeat(2,1fr);
     gap:1px;
     background:var(--line-strong);
     border:1px solid var(--line-strong);
+    border-radius: var(--radius-md);
+    overflow:hidden;
+    box-shadow: var(--shadow-sm);
   }
   @media (max-width:640px){ .goals{grid-template-columns:1fr;} }
   .goal{
     background:var(--paper-light);
-    padding:26px 26px 24px;
+    padding:30px 28px 26px;
+    transition: background var(--transition);
+  }
+  .goal:hover{
+    background:#FBF7EB;
   }
   .goal .gi{
     font-family:"IBM Plex Mono", monospace;
     font-size:11px;
     color:var(--graphite);
-    margin-bottom:10px;
+    margin-bottom:12px;
     display:block;
   }
-  .goal p{font-size:15.5px; color:var(--ink-soft);}
+  .goal p{font-size:15.5px; color:var(--ink-soft); line-height:1.7;}
   .goal-note{
     grid-column:1/-1;
     background:var(--paper-light);
-    padding:20px 26px;
+    padding:22px 28px;
     font-family:"IBM Plex Mono", monospace;
     font-size:12.5px;
     color:var(--graphite);
     font-style:normal;
+    border-top:1px solid var(--line-strong);
   }
 
-  /* ---------- CLAIMS (Art.3, patent-claim style) ---------- */
   .claims{counter-reset: claim;}
   .claim{
     counter-increment: claim;
     display:grid;
     grid-template-columns:52px 1fr;
     gap:20px;
-    padding:22px 0;
+    padding:26px 0;
     border-top:1px solid var(--line);
     align-items:start;
+    transition: padding-left var(--transition);
+    position:relative;
   }
   .claim:last-child{border-bottom:1px solid var(--line);}
   .claim::before{
@@ -277,15 +368,18 @@
     font-size:12.5px;
     color:var(--brass-deep);
     padding-top:3px;
+    transition: color var(--transition);
   }
-  .claim h3{font-size:18px; font-weight:600; margin-bottom:6px;}
-  .claim p{color:var(--ink-soft); font-size:15.5px; max-width:64ch;}
+  .claim:hover::before{
+    color:var(--brass);
+  }
+  .claim h3{font-size:19px; font-weight:600; margin-bottom:8px;}
+  .claim p{color:var(--ink-soft); font-size:15.5px; max-width:64ch; line-height:1.7;}
 
-  /* ---------- METODO DIAGRAM ---------- */
   .method-wrap{
     display:grid;
     grid-template-columns:1fr;
-    gap:36px;
+    gap:44px;
   }
   .fig-caption{
     font-family:"IBM Plex Mono", monospace;
@@ -293,7 +387,7 @@
     color:var(--graphite);
     text-align:center;
     letter-spacing:0.04em;
-    margin-top:10px;
+    margin-top:14px;
   }
   .method-steps{
     display:grid;
@@ -301,39 +395,52 @@
     gap:1px;
     background:var(--line-strong);
     border:1px solid var(--line-strong);
+    border-radius: var(--radius-md);
+    overflow:hidden;
+    box-shadow: var(--shadow-sm);
   }
   @media (max-width:900px){ .method-steps{grid-template-columns:repeat(2,1fr);} }
   @media (max-width:520px){ .method-steps{grid-template-columns:1fr;} }
   .mstep{
     background:var(--paper-light);
-    padding:20px 18px 18px;
+    padding:24px 20px 22px;
+    transition: background var(--transition);
+  }
+  .mstep:hover{
+    background:#FBF7EB;
   }
   .mstep .mnum{
     font-family:"IBM Plex Mono", monospace;
     font-size:11px;
     color:var(--brass-deep);
   }
-  .mstep p{font-size:14px; color:var(--ink-soft); margin-top:8px;}
+  .mstep p{font-size:14.5px; color:var(--ink-soft); margin-top:10px; line-height:1.7;}
   .method-note{
     font-family:"IBM Plex Mono", monospace;
     font-size:12.5px;
     color:var(--alert);
     text-align:center;
-    padding-top:6px;
+    padding-top:8px;
   }
 
-  /* ---------- STRUTTURA (two levels) ---------- */
   .levels{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:1px;
     background:var(--line-strong);
     border:1px solid var(--line-strong);
+    border-radius: var(--radius-md);
+    overflow:hidden;
+    box-shadow: var(--shadow-sm);
   }
   @media (max-width:700px){ .levels{grid-template-columns:1fr;} }
   .level{
     background:var(--paper-light);
-    padding:32px 30px;
+    padding:36px 32px;
+    transition: background var(--transition);
+  }
+  .level:hover{
+    background:#FBF7EB;
   }
   .level .lvl-tag{
     font-family:"IBM Plex Mono", monospace;
@@ -342,17 +449,17 @@
     text-transform:uppercase;
     color:var(--brass-deep);
     display:block;
-    margin-bottom:12px;
+    margin-bottom:14px;
   }
-  .level h3{font-size:21px; margin-bottom:12px;}
-  .level ul{margin:14px 0 0 0; padding-left:0; list-style:none;}
+  .level h3{font-size:22px; margin-bottom:14px;}
+  .level ul{margin:16px 0 0 0; padding-left:0; list-style:none;}
   .level li{
     font-size:15px; color:var(--ink-soft);
-    padding:9px 0; border-top:1px solid var(--line);
+    padding:11px 0; border-top:1px solid var(--line);
+    line-height:1.7;
   }
   .level li:first-child{border-top:none;}
 
-  /* ---------- ADESIONE / SELEZIONE steps ---------- */
   .process{
     display:flex;
     flex-direction:column;
@@ -361,133 +468,175 @@
     display:grid;
     grid-template-columns:52px 1fr;
     gap:20px;
-    padding:16px 0;
+    padding:18px 0;
     border-top:1px solid var(--line);
+    transition: background var(--transition);
   }
   .pstep:last-child{border-bottom:1px solid var(--line);}
-  .pstep .pn{font-family:"IBM Plex Mono", monospace; font-size:12.5px; color:var(--brass-deep);}
-  .pstep p{color:var(--ink-soft); font-size:15.5px;}
+  .pstep .pn{font-family:"IBM Plex Mono", monospace; font-size:12.5px; color:var(--brass-deep); padding-top:3px;}
+  .pstep p{color:var(--ink-soft); font-size:15.5px; line-height:1.7;}
 
-  /* ---------- LEADERSHIP ---------- */
   .lead-band{
-    background:var(--ink);
+    background: linear-gradient(135deg, var(--ink) 0%, #1E2C4E 100%);
     color:var(--paper-light);
-    padding:56px 0;
+    padding:64px 0;
+    position:relative;
+    overflow:hidden;
   }
-  .lead-band .container{display:grid; grid-template-columns:120px 1fr; gap:32px;}
+  .lead-band::before{
+    content:"";
+    position:absolute;
+    top:-80%;
+    right:-10%;
+    width:500px;
+    height:500px;
+    background:radial-gradient(circle, rgba(185,138,78,0.08) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .lead-band .container{display:grid; grid-template-columns:120px 1fr; gap:32px; position:relative; z-index:1;}
   @media (max-width:640px){ .lead-band .container{grid-template-columns:1fr;} }
   .lead-band .artno{color:#B98A4E; font-family:"IBM Plex Mono", monospace; font-size:13px; padding-top:6px;}
-  .lead-band h2{color:var(--paper-light); font-size:clamp(26px,3.4vw,34px); margin-bottom:20px;}
-  .lead-band p{color:rgba(248,244,233,0.82); max-width:60ch; font-size:16px; margin-bottom:10px;}
+  .lead-band h2{color:var(--paper-light); font-size:clamp(26px,3.4vw,36px); margin-bottom:22px;}
+  .lead-band p{color:rgba(248,244,233,0.82); max-width:60ch; font-size:16.5px; margin-bottom:12px; line-height:1.75;}
   .lead-band .tenet{
     font-family:"IBM Plex Mono", monospace;
     font-size:13px;
     color:#B98A4E;
-    margin-top:22px;
+    margin-top:28px;
     letter-spacing:0.03em;
   }
 
-  /* ---------- COMUNICAZIONE / FINANZIAMENTO ---------- */
   .duo{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:48px;
+    gap:56px;
   }
-  @media (max-width:700px){ .duo{grid-template-columns:1fr;} }
+  @media (max-width:700px){ .duo{grid-template-columns:1fr; gap:40px;} }
   .duo .col .artno{
-    font-family:"IBM Plex Mono", monospace; font-size:12px; color:var(--brass-deep); margin-bottom:10px; display:block;
+    font-family:"IBM Plex Mono", monospace; font-size:12px; color:var(--brass-deep); margin-bottom:12px; display:block;
   }
-  .duo h3{font-size:22px; margin-bottom:14px;}
+  .duo h3{font-size:23px; margin-bottom:16px;}
   .duo ul{list-style:none;}
   .duo li{
     font-size:15px; color:var(--ink-soft);
-    padding:9px 0 9px 20px; border-top:1px solid var(--line);
+    padding:11px 0 11px 22px; border-top:1px solid var(--line);
     position:relative;
+    line-height:1.7;
   }
   .duo li:first-of-type{border-top:none;}
   .duo li::before{
     content:"—"; position:absolute; left:0; color:var(--brass);
   }
 
-  /* ---------- CLOSING / SCIOGLIMENTO ---------- */
   .closing{
-    padding:80px 0 60px;
+    padding:88px 0 68px;
     text-align:center;
+    position:relative;
+  }
+  .closing::before{
+    content:"";
+    position:absolute;
+    top:10%;
+    left:50%;
+    transform:translateX(-50%);
+    width:400px;
+    height:400px;
+    background:radial-gradient(circle, rgba(160,107,42,0.05) 0%, transparent 70%);
+    pointer-events:none;
   }
   .closing .motto{
     font-family:"Fraunces", serif;
     font-style:italic;
     font-weight:450;
-    font-size:clamp(24px,3.4vw,32px);
+    font-size:clamp(24px,3.4vw,34px);
     max-width:16ch;
-    margin:0 auto 20px;
+    margin:0 auto 22px;
+    position:relative;
+    z-index:1;
   }
-  .closing p{color:var(--graphite); font-size:14.5px; max-width:52ch; margin:0 auto;}
+  .closing p{color:var(--graphite); font-size:15px; max-width:54ch; margin:0 auto; line-height:1.8; position:relative; z-index:1;}
 
-  /* ---------- JOIN CTA ---------- */
   .join{
-    padding:72px 0;
+    padding:80px 0;
     border-top:1px solid var(--line-strong);
   }
   .join-grid{
-    display:grid; grid-template-columns:1.2fr 1fr; gap:48px; align-items:center;
+    display:grid; grid-template-columns:1.2fr 1fr; gap:56px; align-items:center;
   }
-  @media (max-width:760px){ .join-grid{grid-template-columns:1fr;} }
-  .join h2{font-size:clamp(28px,3.6vw,40px); max-width:14ch; margin-bottom:16px;}
-  .join p{color:var(--ink-soft); max-width:48ch;}
+  @media (max-width:760px){ .join-grid{grid-template-columns:1fr; gap:40px;} }
+  .join h2{font-size:clamp(28px,3.6vw,42px); max-width:14ch; margin-bottom:18px;}
+  .join p{color:var(--ink-soft); max-width:48ch; font-size:16px; line-height:1.75;}
   .join-panel{
     border:1px solid var(--line-strong);
     background:var(--paper-light);
-    padding:28px;
+    padding:32px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
   }
   .join-panel .req{
     font-family:"IBM Plex Mono", monospace; font-size:11px; color:var(--brass-deep);
-    letter-spacing:0.06em; text-transform:uppercase; margin-bottom:14px;
+    letter-spacing:0.06em; text-transform:uppercase; margin-bottom:18px;
   }
-  .join-panel ol{margin-left:18px; color:var(--ink-soft); font-size:14.5px; line-height:1.9;}
+  .join-panel ol{margin-left:20px; color:var(--ink-soft); font-size:14.5px; line-height:1.95;}
+  .join-panel li{padding:3px 0;}
 
-  /* ---------- FULL STATUTE (details) ---------- */
   .statute-full{
-    padding:56px 0 96px;
+    padding:60px 0 104px;
   }
   details{
     border:1px solid var(--line-strong);
     background:var(--paper-light);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    overflow:hidden;
+    transition: box-shadow var(--transition);
+  }
+  details[open]{
+    box-shadow: var(--shadow-lg);
   }
   summary{
     cursor:pointer;
     list-style:none;
-    padding:22px 28px;
+    padding:24px 30px;
     display:flex; align-items:center; justify-content:space-between;
     font-family:"IBM Plex Mono", monospace;
     font-size:12.5px; letter-spacing:0.05em; text-transform:uppercase;
+    transition: background var(--transition);
+    user-select:none;
+  }
+  summary:hover{
+    background: #FBF7EB;
+  }
+  summary:focus-visible{
+    outline: 2px solid var(--brass);
+    outline-offset: -2px;
+    border-radius: var(--radius-md);
   }
   summary::-webkit-details-marker{display:none;}
-  summary::after{content:"+"; font-size:18px; color:var(--brass-deep);}
+  summary::after{content:"+"; font-size:20px; color:var(--brass-deep); transition: transform var(--transition); line-height:1;}
   details[open] summary::after{content:"–";}
   .statute-text{
-    padding:0 28px 32px;
+    padding:0 30px 36px;
     font-size:14.5px;
     color:var(--ink-soft);
     white-space:pre-wrap;
     font-family:"Source Serif 4", serif;
-    line-height:1.85;
+    line-height:1.9;
     border-top:1px solid var(--line);
     margin-top:2px;
-    padding-top:24px;
+    padding-top:28px;
   }
 
-  /* ---------- FOOTER ---------- */
   footer{
-    padding:36px 0 48px;
+    padding:40px 0 52px;
     font-family:"IBM Plex Mono", monospace;
     font-size:11.5px;
     color:var(--graphite);
     display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+    border-top:1px solid var(--line);
   }
 
-  /* ---------- reveal ---------- */
-  .reveal{opacity:0; transform:translateY(14px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal{opacity:0; transform:translateY(16px); transition:opacity .8s cubic-bezier(0.4, 0, 0.2, 1), transform .8s cubic-bezier(0.4, 0, 0.2, 1);}
   .reveal.in{opacity:1; transform:translateY(0);}
   @media (prefers-reduced-motion: reduce){
     .reveal{opacity:1; transform:none; transition:none;}
@@ -497,25 +646,29 @@
 </head>
 <body>
 
-<div class="topbar">
+<nav class="topbar" role="navigation" aria-label="Navigazione principale">
   <div class="topbar-inner">
-    <div class="mark">
-      <img src="logo.png" alt="Logo MII" class="logo-mini">
+    <a href="#" class="mark" aria-label="Torna all'inizio">
+      <img src="logo.png" alt="Logo MII" class="logo-mini" loading="eager">
       MOVIMENTO INVENZIONISTA
-    </div>
-    <div class="navlinks">
-      <a href="#finalita">Finalità</a>
-      <a href="#principi">Principi</a>
-      <a href="#metodo">Metodo</a>
-      <a href="#struttura">Struttura</a>
-      <a href="#adesione">Adesione</a>
-      <a href="#statuto">Statuto</a>
+    </a>
+    <button class="nav-toggle" aria-label="Apri menu" aria-expanded="false" aria-controls="main-nav">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="navlinks" id="main-nav" role="menu">
+      <a href="#finalita" role="menuitem">Finalità</a>
+      <a href="#principi" role="menuitem">Principi</a>
+      <a href="#metodo" role="menuitem">Metodo</a>
+      <a href="#struttura" role="menuitem">Struttura</a>
+      <a href="#adesione" role="menuitem">Adesione</a>
+      <a href="#statuto" role="menuitem">Statuto</a>
     </div>
   </div>
-</div>
+</nav>
 
-<!-- ================= HERO ================= -->
-<header class="hero">
+<header class="hero" role="banner">
   <div class="container">
     <div class="hero-grid">
       <div>
@@ -523,16 +676,16 @@
         <div class="eyebrow">Movimento politico nazionale</div>
         <h1>Governare è un <em>problema tecnico</em> prima che uno slogan.</h1>
         <p class="sub">Il Movimento Invenzionista Italiano è apartitico nei metodi e non ideologico nei fini. Non promettiamo risultati assoluti: promettiamo processi migliorabili, verificabili, revocabili.</p>
-        <div class="definition"><b>Invenzionismo</b> (s.m.) — metodo politico secondo cui ogni posizione decisionale richiede la capacità di formulare almeno una proposta operativa, analizzabile e criticabile, atta a modificare lo stato del sistema affrontato.</div>
+        <div class="definition" role="definition" aria-label="Definizione di Invenzionismo"><b>Invenzionismo</b> (s.m.) — metodo politico secondo cui ogni posizione decisionale richiede la capacità di formulare almeno una proposta operativa, analizzabile e criticabile, atta a modificare lo stato del sistema affrontato.</div>
         <div class="cta-row">
           <a href="#adesione" class="btn btn-solid">Come aderire</a>
           <a href="#statuto" class="btn btn-outline">Leggi lo statuto</a>
         </div>
       </div>
-      <div class="seal">
+      <div class="seal" aria-hidden="true">
         <div class="seal-frame">
           <div class="seal-frame-inner">
-            <img src="logo.png" alt="Logo Movimento Invenzionista Italiano" class="seal-logo">
+            <img src="logo.png" alt="Logo Movimento Invenzionista Italiano" class="seal-logo" loading="eager">
           </div>
         </div>
       </div>
@@ -540,32 +693,31 @@
   </div>
 </header>
 
-<!-- ================= FINALITA ================= -->
-<section class="doc-section reveal" id="finalita">
+<section class="doc-section reveal" id="finalita" aria-labelledby="finalita-heading">
   <div class="container">
     <div class="sec-head">
       <div class="artno">ART. 2</div>
       <div>
         <div class="eyebrow">Finalità</div>
-        <h2>Quattro obiettivi, nessuna promessa vuota.</h2>
+        <h2 id="finalita-heading">Quattro obiettivi, nessuna promessa vuota.</h2>
       </div>
     </div>
     <div class="sec-body">
       <div class="spacer"></div>
-      <div class="goals">
-        <div class="goal">
+      <div class="goals" role="list">
+        <div class="goal" role="listitem">
           <span class="gi">2.1</span>
           <p>Promuovere l'accesso alle istituzioni di persone dotate di competenze tecniche comprovate.</p>
         </div>
-        <div class="goal">
+        <div class="goal" role="listitem">
           <span class="gi">2.2</span>
           <p>Applicare il metodo scientifico e l'analisi dei dati alla formulazione delle politiche pubbliche.</p>
         </div>
-        <div class="goal">
+        <div class="goal" role="listitem">
           <span class="gi">2.3</span>
           <p>Ridurre l'arbitrarietà decisionale attraverso processi trasparenti e verificabili.</p>
         </div>
-        <div class="goal">
+        <div class="goal" role="listitem">
           <span class="gi">2.4</span>
           <p>Migliorare l'efficienza, la sostenibilità e la razionalità dell'amministrazione pubblica.</p>
         </div>
@@ -575,42 +727,41 @@
   </div>
 </section>
 
-<!-- ================= PRINCIPI ================= -->
-<section class="doc-section reveal" id="principi">
+<section class="doc-section reveal" id="principi" aria-labelledby="principi-heading">
   <div class="container">
     <div class="sec-head">
       <div class="artno">ART. 3</div>
       <div>
         <div class="eyebrow">Principi non negoziabili</div>
-        <h2>Cinque clausole fondative. Inderogabili anche in sede di revisione.</h2>
+        <h2 id="principi-heading">Cinque clausole fondative. Inderogabili anche in sede di revisione.</h2>
       </div>
     </div>
-    <div class="claims">
-      <div class="claim">
+    <div class="claims" role="list">
+      <div class="claim" role="listitem">
         <div>
           <h3>Competenza dimostrabile</h3>
           <p>Ogni ruolo decisionale richiede qualifiche, esperienza o evidenze verificabili — non la sola appartenenza o fedeltà.</p>
         </div>
       </div>
-      <div class="claim">
+      <div class="claim" role="listitem">
         <div>
           <h3>Trasparenza operativa</h3>
           <p>Dati, analisi e criteri decisionali devono essere accessibili a chiunque voglia verificarli.</p>
         </div>
       </div>
-      <div class="claim">
+      <div class="claim" role="listitem">
         <div>
           <h3>Responsabilità</h3>
           <p>Ogni decisione è associata a indicatori di valutazione ex post: si misura ciò che si è deciso.</p>
         </div>
       </div>
-      <div class="claim">
+      <div class="claim" role="listitem">
         <div>
           <h3>Revisione continua</h3>
           <p>Ogni politica è rivedibile alla luce di nuove evidenze. Nessuna posizione è definitiva per principio.</p>
         </div>
       </div>
-      <div class="claim">
+      <div class="claim" role="listitem">
         <div>
           <h3>Assenza di culto della personalità</h3>
           <p>Il metodo precede le persone. Nessun individuo è più grande del processo che rappresenta.</p>
@@ -620,78 +771,65 @@
   </div>
 </section>
 
-<!-- ================= METODO ================= -->
-<section class="doc-section reveal" id="metodo">
+<section class="doc-section reveal" id="metodo" aria-labelledby="metodo-heading">
   <div class="container">
     <div class="sec-head">
       <div class="artno">ART. 4</div>
       <div>
         <div class="eyebrow">Metodo Invenzionista</div>
-        <h2>Un ciclo, non un dogma. Si chiude solo per ricominciare.</h2>
+        <h2 id="metodo-heading">Un ciclo, non un dogma. Si chiude solo per ricominciare.</h2>
       </div>
     </div>
 
     <div class="method-wrap">
       <div>
-        <svg viewBox="0 0 500 460" style="width:100%; max-width:560px; display:block; margin:0 auto;" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 500 460" style="width:100%; max-width:580px; display:block; margin:0 auto;" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagramma del ciclo del Metodo Invenzionista">
           <circle cx="250" cy="230" r="160" fill="none" stroke="#16213A" stroke-width="1" stroke-dasharray="1 6" opacity="0.55"/>
-          <!-- arrows path (cycle) -->
           <path d="M 250 70 A 160 160 0 1 1 97.8 180.6" fill="none" stroke="#A06B2A" stroke-width="1.3" marker-end="url(#arrow)"/>
           <defs>
             <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
               <path d="M0,0 L8,4 L0,8 z" fill="#A06B2A"/>
             </marker>
           </defs>
-
-          <!-- node 1 -->
           <circle cx="250" cy="70" r="30" fill="#F8F4E9" stroke="#16213A" stroke-width="1.2"/>
           <text x="250" y="66" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#A06B2A">FIG 4.1</text>
           <text x="250" y="80" text-anchor="middle" font-family="Fraunces" font-size="13" fill="#16213A">Analisi</text>
-
-          <!-- node 2 -->
           <circle cx="402" cy="181" r="30" fill="#F8F4E9" stroke="#16213A" stroke-width="1.2"/>
           <text x="402" y="177" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#A06B2A">FIG 4.2</text>
           <text x="402" y="191" text-anchor="middle" font-family="Fraunces" font-size="13" fill="#16213A">Confronto</text>
-
-          <!-- node 3 -->
           <circle cx="344" cy="359" r="30" fill="#F8F4E9" stroke="#16213A" stroke-width="1.2"/>
           <text x="344" y="355" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#A06B2A">FIG 4.3</text>
           <text x="344" y="369" text-anchor="middle" font-family="Fraunces" font-size="13" fill="#16213A">Trade-off</text>
-
-          <!-- node 4 -->
           <circle cx="156" cy="359" r="30" fill="#F8F4E9" stroke="#16213A" stroke-width="1.2"/>
           <text x="156" y="355" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#A06B2A">FIG 4.4</text>
           <text x="156" y="369" text-anchor="middle" font-family="Fraunces" font-size="13" fill="#16213A">Attuazione</text>
-
-          <!-- node 5 -->
           <circle cx="98" cy="181" r="30" fill="#F8F4E9" stroke="#16213A" stroke-width="1.2"/>
           <text x="98" y="177" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#A06B2A">FIG 4.5</text>
           <text x="98" y="191" text-anchor="middle" font-family="Fraunces" font-size="13" fill="#16213A">Revisione</text>
-
           <text x="250" y="235" text-anchor="middle" font-family="IBM Plex Mono" font-size="10.5" fill="#5B5A50" letter-spacing="0.5">CICLO</text>
           <text x="250" y="250" text-anchor="middle" font-family="IBM Plex Mono" font-size="10.5" fill="#5B5A50" letter-spacing="0.5">CONTINUO</text>
         </svg>
         <div class="fig-caption">FIG. 1 — Il ciclo del Metodo Invenzionista, Art. 4</div>
       </div>
 
-      <div class="method-steps">
-        <div class="mstep">
+      <div class="method-steps" role="list">
+        <div class="mstep" role="listitem">
           <span class="mnum">4.1</span>
           <p>Analisi del problema tramite dati e modelli espliciti.</p>
         </div>
-        <div class="mstep">
+        <div class="mstep" role="listitem">
           <span class="mnum">4.2</span>
           <p>Valutazione comparativa delle alternative.</p>
         </div>
-        <div class="mstep">
+        <div class="mstep" role="listitem">
           <span class="mnum">4.3</span>
           <p>Esplicitazione dei trade-off e dei limiti.</p>
         </div>
-        <div class="mstep">
+        <div class="mstep" role="listitem">
           <span class="mnum">4.4</span>
           <p>Implementazione graduale e monitorata.</p>
         </div>
-        <div class="mstep">
+        <div class="mstep" role="listitem">
           <span class="mnum">4.5</span>
           <p>Valutazione degli effetti e revisione.</p>
         </div>
@@ -701,18 +839,17 @@
   </div>
 </section>
 
-<!-- ================= STRUTTURA ================= -->
-<section class="doc-section reveal" id="struttura">
+<section class="doc-section reveal" id="struttura" aria-labelledby="struttura-heading">
   <div class="container">
     <div class="sec-head">
       <div class="artno">ART. 5</div>
       <div>
         <div class="eyebrow">Struttura del Movimento</div>
-        <h2>Due livelli, distinti e interdipendenti.</h2>
+        <h2 id="struttura-heading">Due livelli, distinti e interdipendenti.</h2>
       </div>
     </div>
-    <div class="levels">
-      <div class="level">
+    <div class="levels" role="list">
+      <div class="level" role="listitem">
         <span class="lvl-tag">Livello A</span>
         <h3>Tecnico</h3>
         <ul>
@@ -721,7 +858,7 @@
           <li>I contenuti tecnici non sono modificabili senza motivazione pubblica.</li>
         </ul>
       </div>
-      <div class="level">
+      <div class="level" role="listitem">
         <span class="lvl-tag">Livello B</span>
         <h3>Politico</h3>
         <ul>
@@ -734,50 +871,47 @@
   </div>
 </section>
 
-<!-- ================= ADESIONE / SELEZIONE ================= -->
-<section class="doc-section reveal" id="adesione">
+<section class="doc-section reveal" id="adesione" aria-labelledby="adesione-heading">
   <div class="container">
     <div class="sec-head">
       <div class="artno">ART. 6–7</div>
       <div>
         <div class="eyebrow">Adesione e selezione delle cariche</div>
-        <h2>Aderire non è ottenere un ruolo. È accettare di essere valutati.</h2>
+        <h2 id="adesione-heading">Aderire non è ottenere un ruolo. È accettare di essere valutati.</h2>
       </div>
     </div>
     <div class="sec-body">
       <div></div>
-      <div class="process">
-        <div class="pstep"><span class="pn">01</span><p>Accettazione integrale dello Statuto.</p></div>
-        <div class="pstep"><span class="pn">02</span><p>Impegno a rispettare il Metodo Invenzionista.</p></div>
-        <div class="pstep"><span class="pn">03</span><p>Accettazione della valutazione delle proprie competenze — l'adesione non implica automaticamente ruoli decisionali.</p></div>
-        <div class="pstep"><span class="pn">04</span><p>Le cariche interne e le candidature pubbliche seguono criteri oggettivi dichiarati.</p></div>
-        <div class="pstep"><span class="pn">05</span><p>Valutazione delle competenze, con eventuali prove o colloqui tecnici.</p></div>
-        <div class="pstep"><span class="pn">06</span><p>Revisione periodica delle prestazioni, anche dopo l'assegnazione della carica.</p></div>
+      <div class="process" role="list">
+        <div class="pstep" role="listitem"><span class="pn">01</span><p>Accettazione integrale dello Statuto.</p></div>
+        <div class="pstep" role="listitem"><span class="pn">02</span><p>Impegno a rispettare il Metodo Invenzionista.</p></div>
+        <div class="pstep" role="listitem"><span class="pn">03</span><p>Accettazione della valutazione delle proprie competenze — l'adesione non implica automaticamente ruoli decisionali.</p></div>
+        <div class="pstep" role="listitem"><span class="pn">04</span><p>Le cariche interne e le candidature pubbliche seguono criteri oggettivi dichiarati.</p></div>
+        <div class="pstep" role="listitem"><span class="pn">05</span><p>Valutazione delle competenze, con eventuali prove o colloqui tecnici.</p></div>
+        <div class="pstep" role="listitem"><span class="pn">06</span><p>Revisione periodica delle prestazioni, anche dopo l'assegnazione della carica.</p></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ================= LEADERSHIP band ================= -->
-<div class="lead-band reveal">
+<section class="lead-band reveal" aria-labelledby="leadership-heading">
   <div class="container">
     <div class="artno">ART. 8</div>
     <div>
-      <h2>Nessun leader permanente.</h2>
+      <h2 id="leadership-heading">Nessun leader permanente.</h2>
       <p>Ogni incarico è a tempo determinato, revocabile, subordinato ai risultati e alla conformità al metodo.</p>
       <p>Il Movimento sopravvive ai suoi fondatori — per costruzione, non per augurio.</p>
       <div class="tenet">→ NESSUNA CARICA È PER SEMPRE</div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- ================= COMUNICAZIONE / FINANZIAMENTO ================= -->
-<section class="doc-section reveal">
+<section class="doc-section reveal" aria-labelledby="comunicazione-heading">
   <div class="container">
     <div class="duo">
-      <div class="col">
+      <div class="col" role="region" aria-labelledby="comunicazione-heading">
         <span class="artno">ART. 9</span>
-        <h3>Comunicazione pubblica</h3>
+        <h3 id="comunicazione-heading">Comunicazione pubblica</h3>
         <ul>
           <li>Evita slogan semplificatori ingannevoli.</li>
           <li>Esplicita limiti, costi e incertezze.</li>
@@ -785,9 +919,9 @@
           <li>Rifiuta la disinformazione come strumento politico.</li>
         </ul>
       </div>
-      <div class="col">
+      <div class="col" role="region" aria-labelledby="finanziamento-heading">
         <span class="artno">ART. 10</span>
-        <h3>Finanziamento</h3>
+        <h3 id="finanziamento-heading">Finanziamento</h3>
         <ul>
           <li>Ogni forma di finanziamento è trasparente.</li>
           <li>È tracciabile.</li>
@@ -799,32 +933,30 @@
   </div>
 </section>
 
-<!-- ================= MODIFICA / SCIOGLIMENTO ================= -->
-<section class="closing reveal">
+<section class="closing reveal" aria-labelledby="closing-motto">
   <div class="container">
-    <div class="doc-number" style="text-align:center; margin-bottom:24px;">ART. 11–12</div>
-    <div class="motto">Meglio cessare che degenerare.</div>
+    <div class="doc-number" style="text-align:center; margin-bottom:28px;">ART. 11–12</div>
+    <div class="motto" id="closing-motto">Meglio cessare che degenerare.</div>
     <p>Lo Statuto si modifica solo con procedura pubblica, motivazione tecnica e consultazione interna — mai in violazione dei principi dell'Art. 3. Il Movimento si scioglie se viene meno il rispetto sistematico del Metodo o la responsabilità decisionale.</p>
   </div>
 </section>
 
-<!-- ================= JOIN ================= -->
-<section class="join reveal">
+<section class="join reveal" aria-labelledby="join-heading">
   <div class="container">
     <div class="join-grid">
       <div>
         <div class="eyebrow">Partecipare</div>
-        <h2>Non cerchiamo consenso. Cerchiamo competenza.</h2>
+        <h2 id="join-heading">Non cerchiamo consenso. Cerchiamo competenza.</h2>
         <p>Se condividi il metodo più che l'identità, il Movimento Invenzionista non ti chiede fedeltà: ti chiede di dimostrare, discutere e lasciarti valutare.</p>
       </div>
-      <div class="join-panel">
+      <div class="join-panel" role="region" aria-label="Requisiti di adesione">
         <div class="req">Requisiti d'adesione — Art. 6</div>
         <ol>
           <li>Accettazione integrale dello Statuto</li>
           <li>Impegno al Metodo Invenzionista</li>
           <li>Disponibilità alla valutazione delle proprie competenze</li>
         </ol>
-        <div class="cta-row" style="margin-top:22px;">
+        <div class="cta-row" style="margin-top:24px;">
           <a href="#statuto" class="btn btn-solid">Leggi lo Statuto completo</a>
         </div>
       </div>
@@ -832,10 +964,9 @@
   </div>
 </section>
 
-<!-- ================= FULL STATUTE ================= -->
-<section class="statute-full container reveal" id="statuto">
+<section class="statute-full container reveal" id="statuto" aria-labelledby="statuto-heading">
   <details>
-    <summary>Statuto del Movimento Invenzionista Italiano — testo integrale (Art. 1–12)</summary>
+    <summary id="statuto-heading">Statuto del Movimento Invenzionista Italiano — testo integrale (Art. 1–12)</summary>
     <div class="statute-text">Art. 1 Natura del Movimento
 Il Movimento Invenzionista Italiano è un movimento politico nazionale, apartitico nei metodi e non ideologico nei fini, fondato sul principio che il governo della cosa pubblica debba basarsi su competenza verificabile, metodo razionale e responsabilità misurabile.
 Il Movimento non rappresenta una corrente filosofica, morale o identitaria, ma un metodo di governo.
@@ -924,12 +1055,29 @@ NOTA: L'invenzionismo è un metodo politico secondo cui ogni posizione decisiona
   </details>
 </section>
 
-<footer class="container">
+<footer class="container" role="contentinfo">
   <span>© Movimento Invenzionista Italiano — documento redatto secondo lo Statuto, Art. 1–12</span>
   <span>Metodo su ideologia. Sempre.</span>
 </footer>
 
 <script>
+  const navToggle = document.querySelector('.nav-toggle');
+  const navLinks = document.querySelector('.navlinks');
+  if (navToggle && navLinks) {
+    navToggle.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', isOpen);
+      navToggle.setAttribute('aria-label', isOpen ? 'Chiudi menu' : 'Apri menu');
+    });
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        navToggle.setAttribute('aria-label', 'Apri menu');
+      });
+    });
+  }
+
   const els = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
